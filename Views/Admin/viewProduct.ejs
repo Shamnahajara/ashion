@@ -1,0 +1,178 @@
+<%- include('../adminLayout/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+          <li class="breadcrumb-item">Product</li>
+          <li class="breadcrumb-item active">Product details</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 ">
+
+              <img src="<%=productData.productimage[0]%>" alt="Profile">
+              <img src="<%=productData.productimage[1]%>" alt="Profile">
+              <img src="<%=productData.productimage[2]%>" alt="Profile">
+              <img src="<%=productData.productimage[3]%>" alt="Profile">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+
+                
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  
+
+                  <h5 class="card-title">Product Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Product Name</div>
+                    <div class="col-lg-9 col-md-8"><%=productData.productname%></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Price</div>
+                    <div class="col-lg-9 col-md-8"><%=productData.price%></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Category</div>
+                    <div class="col-lg-9 col-md-8"><%=productData.category.catogoryname%></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Brand</div>
+                    <div class="col-lg-9 col-md-8"><%=productData.brand.brandname%></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Quantity</div>
+                    <div class="col-lg-9 col-md-8"><%=productData.quantity%></div>
+                  </div>
+
+                  
+                  <h5 class="card-title">Description</h5>
+                  <p class="small fst-italic"><%=productData.description%></p>
+
+                </div>
+
+                
+
+                
+
+                
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+
+        <!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Stylish</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+  <% include('../adminLayout/footer.ejs') %>

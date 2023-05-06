@@ -1,0 +1,252 @@
+<%- include('../adminLayout/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Blank Page</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Pages</li>
+        <li class="breadcrumb-item active">Blank</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Order Info</h5>
+            <ul style="text-decoration: none;">
+
+              <li>
+                order number &nbsp;&nbsp; &nbsp;&nbsp;<span >     :<%=orders._id.toString().substr(0, 5) %></span>
+              </li>
+              <li>
+                date &nbsp;&nbsp; &nbsp;&nbsp;<span style="text-align: end;" >:<%=orders.start_date.toDateString()%></span>
+              </li>
+              <li>
+                total&nbsp;&nbsp; &nbsp;&nbsp;<span >:$ <%=orders.totalPrice%></span>
+              </li>
+              <li>
+                payment methord&nbsp;&nbsp; &nbsp;&nbsp;<span >     :<%=orders.paymentType %></span>
+              </li>
+              <li>
+                Delivery Status&nbsp;&nbsp; &nbsp;&nbsp;
+                <span >     :<% if (orders.is_delivered===false && orders.is_returned===0 && orders.user_cancelled==false &&
+                    orders.admin_cancelled==false) { %>
+                    Shipped
+                    <% } else if (orders.is_delivered===true && orders.is_returned===0 && orders.user_cancelled==false
+                      && orders.admin_cancelled==false) { %>
+                      Delivered
+                      <% } else if (orders.is_returned===1 && orders.user_cancelled==false &&
+                        orders.admin_cancelled==false) { %>
+                        Returned
+                        <% } else { %>
+                          Cancelled
+                          <% } %>
+
+
+                </span>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">shipping Address</h5>
+            <ul>
+                <li>
+                 Street&nbsp;&nbsp; &nbsp;&nbsp;<span >: <%=orders.address[0].address%></span>
+                </li>
+                <li>
+                 city&nbsp;&nbsp; &nbsp;&nbsp;<span >: <%=orders.address[0].city%></span>
+                </li>
+                <li>
+                 District&nbsp;&nbsp; &nbsp;&nbsp;<span >: <%=orders.address[0].district%>
+                      </span>
+                </li>
+                <li>
+                 postcode&nbsp;&nbsp; &nbsp;&nbsp;<span >: <%=orders.address[0].zip%></span>
+                </li>
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Action</h5>
+
+            <%if(orders.admin_cancelled===false&&orders.is_delivered===false&&orders.user_cancelled===false){%>
+                <a href="/admin/cancelOrder?orderId=<%=orders._id%>"class="btn btn-danger btn-sm">Cancel</a>
+                <a class="btn btn-warning btn-sm"href="/admin/orderStatus?orderId=<%=orders._id%>">Delivered</a>
+           <% } %>
+
+ 
+                
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Product</h5>
+            <table>
+              <thead>
+                <tr>
+                    <th> Product</th>
+                    <th>Produc Name</th>
+                </tr>
+                </thead>
+            <% orders.item.forEach(element => {%>
+            <tbody>
+              <tr>
+                <td><img style="height: 105px;width: 80px;" src="<%= element.product.productimage[0]%>" alt=""></td>
+                <td><%= element.product.productname%></td>
+                </tr>
+            </tbody>
+              
+              
+          <% });%>
+        </table>
+          </div>
+        </div>
+
+        </div>
+
+    </div>
+    
+    <div class="col-lg-12">
+      <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead style="background-color: rgba(5, 54, 128, 0.788);">
+                  <tr>
+                    <th scope="col"  colspan="2">Product</th>
+                    <!-- <th scope="col" colspan="2"></th> -->
+                    <th scope="col" >Quantity</th>
+                    <th scope="col" >Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%orders.item.forEach(item=> {%>
+                    <tr>
+                      <th colspan="2"><span >
+                          <%=item.product.productname%>
+                        </span></th>
+
+                      <th> <span >x <%=item.quantity%></span></th>
+                      <th> <span >$ <%=item.price*item.quantity%></span></th>
+                    </tr>
+                    <%})%>
+                      <tr>
+                        <th colspan="3" >Subtotal</th>
+                        <th> <span >$ <%=parseInt(orders.totalPrice) %></span></th>
+                      </tr>
+                      <tr>
+                        <th colspan="3" >shipping</th>
+                        <th><span >0</span></th>
+                      </tr>
+                </tbody>
+         
+                  <tr>
+                    <th scope="col"  colspan="3">Total</th>
+                    <th  scope="col">$ <%=parseInt(orders.totalPrice) %>
+                    </th>
+                  </tr>
+             
+                
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+      
+
+   </div>
+  </section>
+
+</main><!-- End #main -->
+
+<% include('../adminLayout/footer.ejs') %>

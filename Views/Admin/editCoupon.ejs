@@ -1,0 +1,161 @@
+<%- include('../adminLayout/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link  collapsed" href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Products</h1>
+      <p style="text-align: end;" ><a href="/Admin/addProduct">Add Products+</a></p>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Product</li>
+          <li class="breadcrumb-item active">product list</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Add new Coupons</h5>
+
+      <!-- Floating Labels Form -->
+      <form class="row g-3" action="" method="post">
+        <div class="col-md-12">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="couponName" value="<%=couponData.couponName %>" id="floatingName" placeholder="Coupon name" required>
+            <label for="floatingName">Coupon Name</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" class="form-control" name="couponCode" value="<%=couponData.couponCode %>" id="floatingEmail" placeholder="Coupon code" required>
+            <label for="floatingEmail">Enter code</label>
+          </div>
+        </div>
+      
+        <div class="col-md-6">
+            <div class="form-floating">
+              <input type="date" class="form-control" name="startDate" value="<%=couponData.startDate %>" id="floatingEmail" placeholder="Start date" required>
+              <label for="floatingEmail">Start Date</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="date" class="form-control" name="endDate" value="<%=couponData.endDate %>" id="floatingPassword" placeholder="End Date" required>
+              <label for="floatingPassword">End Date</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control" name="minAmount" value="<%=couponData.minAmount %>" id="floatingEmail" placeholder="Minimum amount" required>
+              <label for="floatingEmail">Minimum Amount</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control" name="maxDiscount" value="<%=couponData.maxDiscount %>" id="floatingPassword" placeholder="Maximum discount" required>
+              <label for="floatingPassword">Max Discount</label>
+            </div>
+          </div>
+       
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <div class="form-floating">
+              <input type="text" class="form-control" name="quantity" value="<%=couponData.quantity %> " id="floatingCity" placeholder="Quantity" required>
+              <label for="floatingCity">Quantity</label>
+            </div>
+          </div>
+        </div>
+     <input type="hidden" name="id" value="<%=couponData._id %>">
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+        <% if(typeof message != 'undefined'){%>
+
+           <p style="color: rgb(160, 35, 35);"><%= message%></p>
+            
+       <% } %>
+      </form><!-- End floating Labels Form -->
+
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+
+</main><!-- End #main -->
+<% include('../adminLayout/footer.ejs') %>

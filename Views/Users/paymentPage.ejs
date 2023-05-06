@@ -1,0 +1,201 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li ><a href="/home">Home</a></li>
+                        <li ><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <span>Payment Options</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+         
+            <form action="/orderConfirm" id="payment" method="post" class="checkout__form">
+                <div class="col-lg-12">
+                    <h5>Billing detail</h5>
+                   
+                </div>
+                
+                <div class="row " style="justify-content: center">
+                        <div class="col-lg-4">
+                            <div class="checkout__order">
+                               
+                                <div class="checkout__order__total">
+                                    <ul>                           
+                                        <li>Total <span><%= Total-wallet %></span></li>
+                                    </ul>
+                                </div>
+                                <div class="checkout__order__widget">
+                                    <label for="cod">
+                                        COD
+                                        <input type="radio" value="COD" name="flexRadioDefault" id="cod">
+                                    
+                                    </label>
+                                    <label for="check-payment">
+                                        RazorPay
+                                        <input type="radio" value="Razorpay" name="flexRadioDefault" id="check-payment" onclick="razorpay()">
+                                       
+                                    </label>
+                                    
+                                    <p>
+                                        Confirm Your Payment, there is no refund policy
+                                        available as of now.
+                                      </p>
+                                </div>
+                                <button type="submit" id="rzp-button" class="site-btn">Pay <%= Total-wallet %></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- Checkout Section End -->
+
+
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+      
+      <script>
+        
+          const radioButtons = document.getElementsByName("flexRadioDefault");
+      
+         
+          document.getElementById("payment").addEventListener("submit", function (event) {
+            
+            event.preventDefault();
+      
+            let radioButtonSelected = false;
+      
+            
+            for (let i = 0; i < radioButtons.length; i++) {
+              if (radioButtons[i].checked) {
+                radioButtonSelected = true;
+                break;
+              }
+            }
+      
+           
+            if (!radioButtonSelected) {
+              alert("Please select a payment option.");
+              return;
+            }
+      
+        
+            this.submit();
+          });
+      
+      </script>
+
+
+<script>
+    function razorpay() {
+      console.log("okok");
+      $.ajax({
+        url: '/razorpayPayment',
+        type: 'get',
+        dataType: 'json',
+        contentType: 'appilaction/json',
+
+        success: (res) => {
+          console.log(res);
+
+          if (res.order) {
+            
+            console.log('gshcghg');
+            var options = {
+              "key": "rzp_test_CSFlQOxXs1bvii",
+              "amount": "<%= Total *100 %>",
+              "currency": "INR",
+              "name": "Acme Corp",
+              "description": "Test Transaction",
+              "image": "https://example.com/your_logo",
+              "order_id": res.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+              "handler": function (response) {
+                success()
+              },
+              "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9000090000"
+              },
+              "notes": {
+                "address": "Razorpay Corporate Office"
+              },
+              "theme": {
+                "color": "#3399cc"
+              }
+            };
+            var rzp1 = new Razorpay(options);
+            document.getElementById('rzp-button').onclick = function (e) {
+              rzp1.open();
+              e.preventDefault();
+            }
+          }
+        }
+      })
+    }
+    function success() {
+      location.href = '/orderConfirmation'
+
+    }
+  </script>
+
+<% include('../Layouts/userFooter.ejs') %>

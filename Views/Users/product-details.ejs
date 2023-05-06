@@ -1,0 +1,281 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li ><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="#">New Product </a>
+                        <span><%=productData.productname %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5" >
+                <div class="xzoom-container" >
+                    
+                      <img class="xzoom" width="350px" height="400px"  id="xzoom-default" src="<%=  productData.productimage[0]%>" xoriginal="<%=  productData.productimage[0]%>" />
+                    </div>
+              
+                     <div class="xzoom-thumbs" style="text-align: left;">
+                       <a style="height: 80px; " href=""><img  class="xzoom-gallery" width="80" height="80px" src="<%=  productData.productimage[0]%>" xpreview="<%=  productData.productimage[0]%>" ></a>
+                       <a href="<%= productData.productimage[1]%>"><img  class="xzoom-gallery" width="80" height="80px" src="<%=  productData.productimage[1]%>" ></a>
+                       <a href="<%= productData.productimage[2]%>"><img  class="xzoom-gallery" width="80" height="80px" src="<%=  productData.productimage[2]%>" ></a>
+                       <a href="<%= productData.productimage[3]%>"><img  class="xzoom-gallery" width="80" height="80px" src="<%=  productData.productimage[3]%>" ></a>
+                   </div>
+                   </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <h3><%= productData.productname %> <span>Brand: <%= productData.brand.brandname %></span></h3>
+                        <h3><span>category: <%= productData.category.catogoryname %></span></h3>
+                      
+                        <div class="product__details__price"><%= productData.price %><span>$ 83.0</span></div>
+                         <h6>Product Rating</h6>
+                       
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p><%= productData.description%></p>
+                        <div class="product__details__button">
+                          
+                       
+                            <ul>
+                                <li><a onclick="addToWishlist('<%= productData._id%>')" href="#"><span class="icon_heart_alt"></span></a></li>
+                                
+                                <li><a onclick="addToCart('<%= productData._id%>')" href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__details__widget">
+                            <ul>
+                                <li>
+                                    <span>Availability:</span>
+                                    <div class="stock__checkbox">
+                                        
+                                            <% if(productData.quantity>0){%>
+                                                <label for="stockin">
+                                                    In stock
+                                                    <input type="checkbox" id="stockin">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            <% }else{ %>
+                                                 <label for="stockin">
+                                                    Out of stock
+                                                    <input type="checkbox" id="stockin">
+                                                    <span class="checkmark"></span>
+                                                </label>
+
+                                               <% } %>
+                                          
+                                    </div>
+                                </li>
+                               
+                              
+                                <li>
+                                    <span>Promotions:</span>
+                                    <p>Free shipping</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="product__details__tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Add Reviews</a>
+                    </li>                 
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( <%=productData.review.length%> )</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                        <h6>Description</h6>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="contact__content">
+                                    <div class="contact__form">
+                                        <h5>Add Review</h5>
+                                        <% if (hasPurchasedProduct) { %>
+                                        <form action="/productdetail?id=<%= productData._id %>" method="post">                                           
+                                            <input type="tel" name="rating" placeholder="Rate product out of 5">
+                                            <textarea name="review" placeholder="Write Review"></textarea>
+                                            <button type="submit" class="btn site-btn">Add Review</button>
+                                        </form>
+                                        <% } else { %>
+                                            <p>You must purchase this product to leave a review.</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="tab-pane" id="tabs-3" role="tabpanel">
+                        <h6>Reviews ( <%=productData.review.length%> )</h6>
+                        <div class="col-lg-12 col-md-6" >
+                            <% for (let i=0; i < productData.review.length; i++) { %>
+                            <div class="col-lg-6 col-md-6"  style="max-width: 50%; margin-left: 139px;">
+                            <img class="rounded-circle img-fluid" style="width: 45px;" src="/public/img/person-icon.jpg"alt=""/>                                         
+                            <p style="color: rgb(45, 110, 248);font-size: 25px;"><%= productData.review[i].userId.name %></p> 
+                            <p style="color: rgb(97, 95, 95);font-size: 15px;"><%= productData.review[i].review %> </p>
+                            <div class="rating">
+                                <% let limit = productData.review[i].rating; %>                                 
+                                <% for(let i=0;i<limit ;i++){%>
+                                    <i class="fa fa-star" style="color: #e3c01c;"></i>
+                               <% } %>
+                               <% for(let i =0;i<5-limit;i++){ %>
+                                <i class="fa fa-star-o" ></i>
+                             <%  } %>   
+                               </div>                           
+                            <% if (reviewList[i].isEditable) { %>
+                                <div class="review-buttons">
+                                    <a type="button" href="/editreview?index=<%= i %>&id=<%= productData._id %>">
+                                    <i style="color: rgb(90, 130, 240);" class=" fa fa-solid fa-edit"></i></a>
+                                  <a type="button" href="/deleteReview?index=<%= i %>&id=<%= productData._id %>"><i style="color: rgb(235, 58, 58);" class=" fa fa-solid fa-trash"></i></a>
+                                </div>
+                              <% } %>
+                              <hr>
+                            </div>
+                            <% } %>                       
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+  </section>
+ 
+
+
+
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function addToCart(proId){
+   
+       $.ajax({
+           url:'/addToCart/'+proId,
+           method:'get',
+           success:(response)=>{
+            console.log(response)
+                swal({  
+                title: "Product",  
+                text: "Added To Cart!",  
+                icon: "success",  
+                button: "oh yes!",  
+                }); 
+            }    
+       })
+   }               
+  </script>
+
+
+
+<script>
+    function addToWishlist(proId){
+       $.ajax({
+           url:'/addtowishlist/'+proId,
+           method:'get',
+           success:(response)=>{
+            console.log(response)
+          
+                swal({  
+                title: "Product",  
+                text: "Added To Whishlist!",  
+                icon: "success",  
+                button: "oh yes!", 
+                });            
+            }    
+       })
+   }               
+  </script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://payalord.github.io/xZoom/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="https://payalord.github.io/xZoom/source/js/xzoom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://payalord.github.io/xZoom/css/xzoom.css" media="all" /> 
+<script type="text/javascript" src="https://payalord.github.io/xZoom/js/setup.js"></script>
+<!-- Product Details Section End -->
+
+<%- include('../Layouts/userFooter.ejs') %>

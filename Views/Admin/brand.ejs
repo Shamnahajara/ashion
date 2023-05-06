@@ -1,0 +1,136 @@
+<%- include('../adminLayout/header.ejs') %>
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <div style="margin-bottom: 10px; ">
+        <h1 style="float: left;">Brands</h1>
+      <p style="text-align: end;" ><a href="/Admin/addBrand">Add Brands+</a></p>
+      </div>
+    </div><!-- End Page Title -->
+  
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+  
+  <div class="card">
+    <div class="card-body">
+     
+  
+      <!-- Table with stripped rows -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Edit</th>
+          
+          </tr>
+        </thead>
+     
+        
+        <tbody>
+          <% if(brandData.length > 0){ %>
+              <% for(let i=0; i<brandData.length; i++){ %>
+                  <tr>
+                    <td><%= i+1%></td> 
+                      <td><%= brandData[i].brandname%></td>
+                      
+                      <td><a class="btn btn-success " href="/admin/editBrand?id=<%= brandData[i]._id %>" style="font-size: small;">Edit</a></td>
+                  </tr>
+              <% } %>
+          <% } else { %>
+              <tr>
+                  <td colspan="2">Brands Not found</td>
+              </tr>
+          <% } %>
+      </tbody>
+        
+      </table>
+      <!-- End Table with stripped rows -->
+  
+    </div>
+  </div>
+  
+  </div>
+  </div>
+  </section>
+  
+  </main>
+  
+  <!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Stylish</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+
+<% include('../adminLayout/footer.ejs') %>

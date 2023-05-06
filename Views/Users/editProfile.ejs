@@ -1,0 +1,178 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li ><a href="/home">Home</a></li>
+                        <li ><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li class="active"><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="/home"><i class="fa fa-home"></i> Home</a>
+                    <span>Edit Profile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+
+    <div class="container">
+        <form class="checkout__form" method="post">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5>Edit Your details</h5>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="checkout__form__input">
+                                <p>Name <span>*</span></p>
+                                <input type="text" value="<%= userData.name %>"  name="name" >
+                            </div>
+                            <div class="checkout__form__input">
+                                <p>Email <span>*</span></p>
+                                <input type="text" value="<%= userData.email %>" name="email">
+        
+                            </div>
+                            <div class="checkout__form__input">
+                                <p>mobile<span>*</span></p>
+                                <input type="text" value="<%=userData.mobile %>" name="mno">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <h3> Update Address</h3>
+  
+                        <% for (let i=0; i < userData.address.length; i++) { %>
+                          <div class="border mt-2">
+                            <label>
+                      
+                              <div>
+                                <%= userData.address[i].name %>,<%= userData.address[i].address %>
+                              </div>
+                      
+                              <div>
+                                <%= userData.address[i].city %>,<%= userData.address[i].zip %>
+                              </div>
+                      
+                              <div>
+                                <%= userData.address[i].district %>
+                              </div>
+                              <div>
+                                <%= userData.address[i].state %>
+                              </div>
+                              <div>
+                                <%= userData.address[i].mobile %>,<%= userData.address[i].number %>,
+                              </div>
+                              <div>
+                        
+                            
+                                <a href="/editAddress?index=<%= i %>"><i style="color: rgb(90, 130, 240);" class=" fa fa-solid fa-edit"></i></a>
+                                <a type="submit" class="ms-1" onclick="delete_address('<%= i %>')"><i style="color: rgb(235, 58, 58);" class=" fa fa-solid fa-trash"></i></a>
+                              </div>
+                      
+                            </label>
+                      
+                          </div>
+                          <% } %>
+        
+                        </div>
+
+                    
+                    
+                </div>
+                <button class="site-btn" type="submit">Update</button>
+            </form>
+        </div>
+    </section><script>
+
+      function delete_address(index) {
+    
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You wan't to delete this address!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'yes, delete!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: "/delete_Address",
+              data: {
+                indexcn: index
+              },
+              method: 'post',
+              success: (response) => {
+                $('#reloadDiv').load('/checkout #reloadDiv')
+                console.log(response);
+                Swal.fire({
+                  title: 'deleted!',
+                  text: 'Your deleted',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer:1300,
+                })
+    
+              }
+    
+            })
+          }
+        })
+      }
+    
+    
+    </script>
+    <!-- Checkout Section End -->
+
+    <% include('../Layouts/userFooter.ejs') %>

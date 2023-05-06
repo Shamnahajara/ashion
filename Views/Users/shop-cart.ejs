@@ -1,0 +1,299 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li ><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li  class="active"><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <span>Shopping cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Cart Section Begin -->
+    <section class="shop-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <% items.forEach((item,index)=>{ %>
+                                <tbody>
+                                <tr>
+                                    <td class="cart__product__item">
+                                        <img src="<%= item.product.productimage[0] %>" alt="">
+                                        <div class="cart__product__item__title">
+                                            <h6><%= item.product.productname %></h6>
+                                        
+                                        </div>
+                                    </td>
+                                    <td class="cart__price"> ₹ <%=item.product.price %></td>
+                                 
+                                        <td>
+                                            <div class="product_count">
+                                              <button class="quantity__minus btn" min="1"   data-index="" onclick="decrement('<%=item.product._id%>','<%=index%>','<%= item.price%>')">-</button>
+                                              <span class="quantity-value" id="quantity<%= index %>"><%=item.quantity%></span>
+                                              <button class="quantity__plus btn" data-index="" onclick="increment('<%=item.product._id%>','<%=index%>','<%= item.price%>')"> +</button>
+                                  
+                                              <button style="background-color: white;" class="remove-item-btn btn " data-item-id="<%=item._id%>"><i class="icon_close"></i></button>
+                                            </div>
+                                          </td>
+                                    <td class="cart__total"><h6 id="totalpriceamount<%= index %>">₹<%=(item.price*item.quantity).toFixed(2) %></h6></td>
+                                 </tr>     
+                            </tbody>
+
+                          <% }) %>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn">
+                        <a href="/shop">Continue Shopping</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="discount__content">
+                       
+                      
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-2">
+                    <div class="cart__total__procced">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Total <span id="totalAountSub">₹<%= totalPrice.toFixed(2)%></span></li>
+                        </ul>
+                        <a href="/checkout" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+<script>
+    function increment(ID,index,price){
+        $.ajax({
+            url:`/incrementCart?id=${ID}`,
+            type:'post',
+            contentType:'application/json',
+             dataType:'json',
+             success:function(res){
+                if(res.ProductID == ID){
+                  let num= parseInt(document.getElementById(`quantity${index}`).innerHTML)
+                    document.getElementById(`quantity${index}`).innerHTML = num+1
+                  let Aprice = parseInt(price)
+                  let totalAmount = res.subtotal;
+                  console.log(totalAmount)
+                  document.getElementById("totalAountSub").innerHTML = totalAmount
+                  document.getElementById(`totalpriceamount${index}`).innerHTML = (num+1)*Aprice
+
+                }
+             }
+        })
+    }
+    $(document).ready(function(){
+        var x=($('.input').val());
+       if( $('.input').val()<0){
+        $('.de').hide()
+       }else{
+        $('.de').show()
+       }
+    })
+    function decrement(ID,index,price){
+        $.ajax({
+            url:`/decrementCart?id=${ID}`,
+            type:'post',
+            contentType:'application/json',
+             dataType:'json',
+             success:function(res){
+                console.log(res);
+                if(res.ProductID== ID){
+                   
+                  let num= parseInt(document.getElementById(`quantity${index}`).innerHTML)
+                    document.getElementById(`quantity${index}`).innerHTML = num-1
+                  let Aprice = parseInt(price)
+                  let totalAmount = parseInt(document.getElementById("totalAountSub").innerHTML)
+                  document.getElementById("totalAountSub").innerHTML = totalAmount + (num*price) -  (num+1)*Aprice
+                  document.getElementById(`totalpriceamount${index}`).innerHTML = (num-1)*Aprice
+                }
+                      
+             }
+        })
+    }
+
+</script>
+    <!-- Shop Cart Section End -->
+
+    <!-- <script>
+        function incrementCart(event){
+            event.preventDefault();
+
+            const itemId = event.target.dataset.id;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST','/incrementCart');
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    const response = JSON.parse(xhr.responseText);
+                    const updatedPrice = response.updatedPrice;
+                    const priceElement = document.querySelector(`#price-${itemId}`);
+                    window.location.href="/cart";
+                    priceElement.textContent = updatedPrice;
+                
+                }else{
+                    console.log(xhr.statusText);
+                }
+            };
+            xhr.onerror = function(){
+            console.log(xhr.statusText);
+            };
+            xhr.send(JSON.stringify({itemId}));
+        }
+
+        function decrementCart(event){
+            event.preventDefault();
+
+            const itemId = event.target.dataset.id;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST','/decrementCart');
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.onload = function(){
+            if(xhr.status === 200){
+                const response = JSON.parse(xhr.responseText);
+                console.log(response);
+                if(response.success){
+                const updatedPrice = response.updatedPrice;
+                const priceElement = document.querySelector(`#price-${itemId}`);
+                window.location.href="/cart";
+                if(priceElement){
+                    priceElement.textContent = updatedPrice
+       
+                }
+                const totalElement = document.querySelector('#total-price');
+                totalElement.textContent = response.totalPrice.toFixed(2);
+               
+                }else{
+                    console.log(response.error);
+                }
+                location.reload()
+            } else{
+                console.log(xhr.statusText);
+            }
+            };
+            xhr.onerror = function(){
+                console.log(xhr.statusText);
+            };
+            xhr.send(JSON.stringify({itemId}));
+        }
+    </script> -->
+
+    <script>
+        const removeItemBtns = document.querySelectorAll(".remove-item-btn");
+        removeItemBtns.forEach(btn=>{
+            btn.addEventListener("click", ()=>{
+                const itemId = btn.dataset.itemId;
+                removeCartItem(itemId);
+            });
+        });
+
+        async function removeCartItem(itemId){
+            try{
+                const response = await fetch("/removeCart",{
+                    method:"POST",
+                    headers: {"Content-Type":"application/json" },
+                    body: JSON.stringify({id:itemId})
+                });
+                if(response.ok){
+                    window.location.href="/cart";
+                }else{
+                    console.error("failed to remove item from cart.")
+                }
+            }catch (error){
+                console.error(error);
+            }
+        }
+    </script>
+  
+
+
+
+
+<%- include('../Layouts/userFooter.ejs') %>

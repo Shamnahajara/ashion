@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Ashion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="/assets1/css/style.css">
+
+	</head>
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4" style="color: #1a86e3;">Forget Password?</h3>
+						<form action="/forgetPassword" id="myForm" method="post" class="login-form">
+							<div style="color: black;" class="w-50 text-md-left">
+								<p>Enter mobile number</p>
+							</div>
+		      		
+	            <div class="form-group d-flex">
+	              <input type="number"  id="mobile" name="mno" class="form-control rounded-left" placeholder="" required>
+	            </div>
+	          
+	            <div class="form-group">
+	            	<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Send OTP</button>
+	            </div>
+	          </form>
+
+	        </div>
+				</div>
+                
+               <% if(typeof msg !== 'undefined'){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= msg %>
+                </div>
+              <% } %>
+			</div>
+		</div>
+	</section>
+
+  <script src="/assets1/js/jquery.min.js"></script>
+  <script src="/assets1/js/popper.js"></script>
+  <script src="/assets1/js/bootstrap.min.js"></script>
+  <script src="/assets1/js/main.js"></script>
+
+  <script>
+    document
+      .getElementById("myForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var mobileInput = document.getElementById("mobile");
+        var mobileNumber = mobileInput.value;
+
+        if (mobileNumber.length !== 10 || isNaN(mobileNumber)) {
+          alert("Please enter a valid mobile number");
+          return;
+        }
+
+        this.submit();
+      });
+  </script>
+
+	</body>
+</html>

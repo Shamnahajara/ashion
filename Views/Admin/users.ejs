@@ -1,0 +1,130 @@
+<%- include('../adminLayout/header.ejs')   %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+          <h1>Users</h1>
+         
+        </div><!-- End Page Title -->
+    
+        <section class="section">
+          <div class="row">
+            <div class="col-lg-12">
+    
+              <div class="card">
+                <div class="card-body">
+                
+                 
+    
+                  <!-- Table with stripped rows -->
+                  <table class="table datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Actions</th>
+                     
+                      </tr>
+                    </thead>
+                    <%   for(let i=0;i<users.length;i++){%>
+                    <tbody>
+                         
+                    <tr>
+                        <td><%= i+1 %></td>
+                        <td><%= users[i].name%></td>
+                        <td><%= users[i].email%></td>
+                        <td><%= users[i].mobile%></td>
+                        <td>
+                            <%if(users[i].status === 0){%>
+                                <a href="/admin/block?id=<%= users[i]._id %>" class="btn btn-outline-danger">Block</a>
+
+                           <% }else{ %>
+                                <a href="/admin/block?id=<%= users[i]._id %>" class="btn btn-outline-primary">unblock</a>
+                            <% } %>
+                        </td>
+                      </tr>    
+                    </tbody>
+                    <% } %>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+      </main>
+      <!-- End #main -->
+           
+      
+
+<%  include('../adminLayout/footer.ejs') %>

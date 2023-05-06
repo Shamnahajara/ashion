@@ -1,0 +1,204 @@
+<%- include('../adminLayout/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>OrderTables</h1>
+      <nav>
+        <ol class="breadcrumb">
+
+          <li class="breadcrumb-item">Order</li>
+          <li class="breadcrumb-item active">Details</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr style="color: rgb(20, 12, 128);">
+                    <th scope="col">Order Count </th>
+                    <th scope="col">User</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%for(let i=0;i<orders.length;i++){%>
+                    <%if(orders[i].user_cancelled==true||orders[i].admin_cancelled==true){%>
+                      <tr>
+                        <th scope="row"><b>
+                            <%=orders[i].orderCount%>
+                          </b></th>
+                        <th scope="row"><b>
+                            <%=orders[i].userId.mobile%>
+                          </b></th>
+                        <td>
+                          <span class="badge bg-danger">Cancelled</span>
+                        </td>
+                        <td><b>
+                            <%=orders[i].address[0].name%>
+                          </b></td>
+                        <td><b>
+                            <%=orders[i].address[0].city%>
+                          </b></td>
+                        <td>
+                          <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>"
+                            class="btn btn-primary btn-sm ">view</a>
+                          <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                            <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>"
+                              class="btn btn-danger btn-sm ">Cancel</a>
+                            <a class="btn btn-warning btn-sm "
+                              href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+
+                            <%}%>
+                        </td>
+                      </tr>
+                      <%}else if(orders[i].is_delivered==true){%>
+                        <tr>
+                          <th scope="row"><b>
+                              <%=orders[i].orderCount%>
+                            </b></th>
+                          <th scope="row"><b>
+                              <%=orders[i].userId.mobile%>
+                            </b></th>
+                          <td>
+                            <span class="badge bg-success">Delivered</span>
+                          </td>
+                          <td><b>
+                              <%=orders[i].address[0].name%>
+                            </b></td>
+                          <td><b>
+                              <%=orders[i].address[0].city%>
+                            </b></td>
+                          <td>
+                            <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>"
+                              class="btn btn-primary btn-sm ">view</a>
+                            <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                              <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>"
+                                class="btn btn-danger btn-sm ">Cancel</a>
+                              <a class="btn btn-warning btn-sm "
+                                href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+
+                              <%}%>
+                          </td>
+                        </tr>
+                        <%}else{%>
+                          <tr>
+                            <th scope="row"><b>
+                                <%=orders[i].orderCount%>
+                              </b></th>
+                            <th scope="row"><b>
+                                <%=orders[i].userId.mobile%>
+                              </b></th>
+                            <td>
+                              <span class="badge bg-warning">Pending</span>
+                            </td>
+                            <td><b>
+                                <%=orders[i].address[0].name%>
+                              </b></td>
+                            <td><b>
+                                <%=orders[i].address[0].city%>
+                              </b></td>
+                            <td>
+                              <a href="/admin/viewOrder?orderId=<%=orders[i]._id%>"
+                                class="btn btn-primary btn-sm ">view</a>
+                              <%if(orders[i].admin_cancelled===false&&orders[i].is_delivered===false&&orders[i].user_cancelled===false){%>
+                                <a href="/admin/cancelOrder?orderId=<%=orders[i]._id%>"
+                                  class="btn btn-danger btn-sm">Cancel</a>
+                                <a class="btn btn-warning btn-sm"
+                                  href="/admin/orderStatus?orderId=<%=orders[i]._id%>">Delivered</a>
+
+                                <%}%>
+                            </td>
+
+                          </tr>
+                          <%}%>
+                            <%}%>
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+<% include('../adminLayout/footer.ejs') %>

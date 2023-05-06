@@ -1,0 +1,154 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li ><a href="/home">Home</a></li>
+                        <li ><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li class="active"><a href="/userProfile"><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="#">User Profile</a>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+<section style="background-color: #eee;">
+    <div class="container py-5">
+     
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3"><%= userData.name %></h5>
+              <h6 class="my-3"><%= userData.wallet %></h6>
+              <div class="d-flex justify-content-center mb-2">
+                <a type="button" href="/forgetPassword" class="btn btn-primary">Forget Password</a>
+
+              </div>
+            </div> 
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-3">
+              
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                
+                        <a href="/editProfile">Edit Profile</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+               
+                    <a href="/orders">Order History</a> 
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+
+                    <a href="/addAddress">Add Address</a>
+                </li>
+              
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= userData.name %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= userData.email %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= userData.mobile %></p>
+                </div>
+              </div>
+              <hr>
+                <% userData.address.forEach(function(address,index) {%>
+                     <div class="row">
+                     <div class="col-sm-3">
+                  <p class="mb-0">Address <%= index+1%></p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">   <%= address.address %>, <%= address.city %></p>
+                </div> 
+                
+              </div>
+               <% }); %>
+              
+            </div>
+          </div>
+          
+      </div>
+    </div>
+  </section>
+
+  <% include('../Layouts/userFooter.ejs') %>

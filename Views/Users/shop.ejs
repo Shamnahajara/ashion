@@ -1,0 +1,440 @@
+<%- include('../Layouts/userHeader.ejs') %>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a href="/home"><img src="/public/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="/home">Home</a></li>
+                        <li  class="active"><a href="/shop">Shop</a></li> 
+                                               
+                        <li><a href="#">Click here</a>
+                            <ul class="dropdown">
+                                <% if(session){%>
+                                    <li><a href="/logout">Logout</a></li>
+                                    <% }else {%>     
+                                   <li> <a href="/login">Login</a></li>
+                                   <li> <a href="/register">Register</a></li>
+                                <% } %>
+                            
+                               
+                            </ul>
+                        </li>
+                        <li><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__right">
+                  
+                    <ul class="header__right__widget">
+                        <li><a href="/wishlist"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt="#"></span></a></li>
+                        <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="shop__sidebar">
+                         <input type="search" onkeyup="filtersearch()" id="search" style="margin-bottom: 40px; border-radius:20px;width: 200px;height: 43px;" placeholder="Search Product">
+                        
+
+
+
+                        <div class="sidebar__sizes">
+                            <div class="section-title">
+                                <h4>Shop by Category</h4>
+                            </div>
+                            <div class="size__list">
+                              <% categoryData.forEach(element => { %>
+                              
+                               <div class="d-flex align-items-center">
+                               
+                                <input type="checkbox" onclick="category('<%=element.catogoryname%>')"
+                                        name="<%=element.catogoryname%>" id="<%=element.catogoryname%>"
+                                        value="<%=element.catogoryname%>">
+                                        <span for="" class="ms-2"><%=element.catogoryname%></span>
+                               </div>
+                             <% }); %>
+                                
+                                
+                            </div>
+                        </div>
+                         
+                        <div class="sidebar__sizes">
+                            <div class="section-title">
+                                <h4>Shop by Brand</h4>
+                            </div>
+                            <div class="size__list">
+                                <% brandData.forEach(element => {%>
+                                 <div   class="d-flex align-items-center">
+                                   
+                                    <input type="checkbox" onclick="brand('<%= element.brandname %>')"
+                                    id="<%= element.brandname %>" value="<%= element.brandname %>">
+                                    <span for="" class="ms-2"><%= element.brandname %> </span>
+                                </div>
+                               <% }); %>
+                              
+                            </div>
+                        </div>
+                        <div class="sidebar__sizes">
+                            <div class="section-title">
+                                <h4>Shop by Price</h4>
+                            </div>
+                            <div class="size__list">
+                             <ul style="list-style-type: none;">
+                                <li>                                    
+                                    <input onclick="price(4)" type="checkbox" value="3000" id="FOUR">
+                                    <span for="" class="ms-2">3000-above</span>
+                                </li>
+                                <li>                                    
+                                    <input onclick="price(3)" type="checkbox" value="2000,2999" id="THREE">
+                                    <span for=""class="ms-2"> 2000-2999</span>
+                                </li>
+                                <li>
+                                    
+                                    <input onclick="price(2)" type="checkbox" value="1000,1999" id="TWO">
+                                    <span for="" class="ms-2">1000-1999</span>
+                                </li> 
+                               <li>
+                               
+                                <input onclick="price(1)" type="checkbox" value="0,999" id="ONE">
+                                <span class="ms-2" for="ONE">0-999</label>
+                               </li>
+                          </ul>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-lg-9 col-md-9" id="reloadDiv">
+                    <div id="Filter" class="row">
+                        <% if(ProductData.length > 0){%>
+                            <% ProductData.forEach(function(item) {%>
+                                <div class="col-lg-4 col-md-6">
+                               
+                                      <div id="wishlistDiv" class="product__item">
+                              <div class="product__item__pic set-bg" data-setbg="">
+                                  <a href="/productdetail?id=<%=item._id %>"> <img src="<%=item.productimage[0] %>" alt=""></a>
+                                     <ul class="product__hover">
+                                         
+                                         <% if(user && user.wishlist && user.wishlist.includes(item._id)) { %>
+                                             <li><a  href="/removewishlist?id=<%= item._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
+                                           <% } else { %>
+                                             <li><a onclick="addToWishlist('<%= item._id %>')" href=""><span><img  style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span></a></li>
+                                           <% } %>
+                                         <li><a onclick="addToCart('<%= item._id%>')"><span class="icon_bag_alt"></span></a></li>
+                                     </ul>
+                                 </div>
+                                 <div class="product__item__text">
+                                     <h6><a href="#"><%=item.productname %></a></h6>
+                                     <div class="product__price"><%=item.price %></div>
+                                     <div><a href="/productdetail?id=<%=item._id %>" class="btn btn-danger" style="color:rgb(255, 255, 255)">Details</a></div>
+                                     
+                                     
+                                 </div>
+                             </div>
+                          
+                         
+                         </div>
+                                  
+                             <% }); %>
+
+                      <%  } else{%>
+
+                        <img src="/public/img/73060-blue-search-not-found.gif" alt="">
+                        
+                    <%  } %>
+                       
+                       
+                   
+                        <div id="ok" class="col-lg-12 text-center">
+                            <div class="pagination__option">
+                                <% for(let i=1;i<=totalPages;i++){%>
+                                    <a href="?page=<%=i%>"><%=i %></a>
+                             <%   } %>
+                                
+                             
+                                <a href="#"><i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+
+    <script>
+        function addToCart(proId){
+       
+           $.ajax({
+               url:'/addToCart/'+proId,
+               method:'get',
+               success:(response)=>{
+          
+                console.log(response)
+                    swal({  
+                    title: "Product",  
+                    text: "Added To Cart!",  
+                    icon: "success",  
+                    button: "oh yes!",  
+                    }); 
+                }    
+           })
+       }               
+      </script>
+
+<script>
+    function addToWishlist(proId){
+       $.ajax({
+           url:'/addtowishlist/'+proId,
+           method:'get',
+           success:(response)=>{
+            console.log(response)
+                swal({  
+                title: "Product",  
+                text: "Added To Whishlist!",  
+                icon: "success",  
+                button: "oh yes!",            
+                }); 
+            }    
+       })
+   }               
+  </script> 
+
+
+
+
+    <script>
+        let n = 0
+        let b = 0
+        let categorys = []
+        let brands = []
+        let search
+        let prices = []
+        let filterprice = []
+        let sort
+        function Sorts(num){
+           sort=Number(num)
+           submit()
+        }
+        function category(ID) {
+
+
+            if ($(`#${ID}`).is(':checked') == true) {
+                categorys[n] = $(`#${ID}`).val()
+                n++
+                console.log(categorys);
+                console.log($(`#${ID}`).is(':checked'))
+            } else {
+                console.log($(`#${ID}`).is(':checked'))
+                console.log(categorys.indexOf(`${$(`#${ID}`).val()}`));
+                let index = categorys.indexOf(`${$(`#${ID}`).val()}`)
+                categorys.splice(index, 1)
+                n--
+                console.log(categorys);
+            }
+            submit(categorys, filterprice, search, brands)
+
+        }
+
+
+        function submit(categorys, brands) {
+            $.ajax({
+                url: '/shopFilter',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ categorys, brands, filterprice, search,sort }),
+                success: (res) => {
+                    let html = []
+                    if (res.Data[0].length!==0) {
+                        $('#Filter').html('')
+                        res.Data.forEach(value => {
+                            value.forEach((item, i) => {
+                                html += `
+                <div class="col-lg-4 col-md-6">
+                    <div class="product__item">
+                           <div class="product__item__pic set-bg" data-setbg="">
+                            <a href="/singleProduct?id=${item._id}"><img
+                                            src="${item.productimage[0].toString('utf8')}" alt=""></a>
+                             <ul class="product__hover">
+                                <li><a href="/addtowishlist?id=${item._id}"><span> <img  style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span></a></li>
+                                 <li><a href="/addToCart?id=${item._id}"><span class="icon_bag_alt"></span></a></li>
+                               </ul>
+                           </div>
+                           <div class="product__item__text">
+                               <h6><a href="#">${item.productname}</a></h6>
+                               <div class="product__price">${item.price}</div>
+                               <div><a href="/productdetail?id=${item._id}" class="btn btn-danger" style="color:rgb(166, 171, 175)">Details</a></div>
+                               
+                           </div>
+                    </div>    
+                </div>
+                   `
+
+                            })
+
+                        });
+
+                        $('#Filter').html(html)
+
+
+
+
+                    }else{
+                        $('#Filter').html('')
+                        
+                                html += `
+                                <div  class="col-lg-9 col-md-9">
+              
+                    <img  style="height: 606px;
+                       width: 666px;" src="/public/img/73060-blue-search-not-found.gif">
+
+                
+                </div>
+                   `
+                        $('#Filter').html(html)
+                    }
+                }
+            })
+        }
+
+
+        function brand(id) {
+            if ($(`#${id}`).is(':checked') == true) {
+                brands[b++] = $(`#${id}`).val();
+            } else {
+                const index = brands.indexOf($(`#${id}`).val());
+                brands.splice(index, 1);
+                b--;
+            }
+            console.log(brands, '=============');
+            submit(categorys, brands, search, filterprice);
+        }
+
+        function filtersearch() {
+            search = $('#search').val()
+            submit(categorys, brands, search, filterprice)
+        }
+
+
+        function price(check) {
+            filterprice = []
+            let one, two, three, fore
+            let n = 0, index
+            if ($("#ONE").is(':checked') == true) {
+                one = $("#ONE").val()
+                prices[n] = one
+                n++
+            } else if (check == 1) {
+                index = prices.indexOf($("#ONE").val())
+                prices.splice(index, 1)
+
+            }
+            if ($("#TWO").is(':checked') == true) {
+                two = $("#TWO").val()
+                prices[n] = two
+                n++
+            } else if (check == 2) {
+                index = prices.indexOf($("#TWO").val())
+                prices.splice(index, 1)
+
+            }
+            if ($("#THREE").is(':checked') == true) {
+                three = $("#THREE").val()
+                prices[n] = three
+                n++
+            } else if (check == 3) {
+                index = prices.indexOf($("#THREE").val())
+                prices.splice(index, 1)
+
+            }
+            if ($("#FOUR").is(':checked') == true) {
+                fore = $("#FOUR").val()
+                prices[n] = fore
+                n++
+            } else if (check == 4) {
+                index = prices.indexOf($("#FOUR").val())
+                prices.splice(index, 1)
+
+            }
+            let length
+            if (prices) {
+                length = prices.length
+            }
+
+
+            if (prices.length == 1 && prices[length - 1].split(',').length == 2) {
+                let first = [prices[length - 1]]
+                first = first[0].split(',')
+
+                filterprice[0] = first[0]
+                filterprice[1] = first[1]
+
+            } else if (prices.length == 1 && prices[length - 1].split(',').length == 1) {
+                console.log('50000');
+                let first = []
+                first[0] = prices[0]
+                filterprice[0] = first[0]
+                console.log(filterprice);
+                
+            } else if (prices.length > 1 && prices[length - 1].split(',').length == 2) {
+                let first = [prices[0]]
+                let second = [prices[length - 1]]
+                first = first[0].split(',')
+                second = second[0].split(',')
+                filterprice[0] = first[0]
+                filterprice[1] = second[1]
+                console.log(filterprice);
+
+            } else if (prices.length > 1 && prices[length - 1].split(',').length == 1) {
+                let first = [prices[0]]
+                first = first[0].split(',')
+                filterprice[0] = first[0]
+                console.log(filterprice);
+                console.log('dhcf');
+            }
+            submit(categorys, brands, search, filterprice)
+        }
+
+    </script>
+
+
+
+    <%- include('../Layouts/userFooter.ejs')  %>

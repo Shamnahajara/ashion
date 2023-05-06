@@ -1,0 +1,154 @@
+<%- include('../adminLayout/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+  
+    <ul class="sidebar-nav" id="sidebar-nav">
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/adminHome">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/users">
+          <i class="bi bi-card-list"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/catogory">
+          <i class="bi bi-card-list"></i>
+          <span>Catogory</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/brand">
+          <i class="bi bi-card-list"></i>
+          <span>Brand</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/product">
+            <i class="bi bi-card-list"></i>
+          <span>Product</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/coupon">
+            <i class="bi bi-card-list"></i>
+          <span>Coupon</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/Admin/order">
+            <i class="bi bi-card-list"></i>
+          <span>Order</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " href="/Admin/banner">
+            <i class="bi bi-card-list"></i>
+          <span>Banner</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/logout" role="button">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>logout</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+    </ul>
+  
+  </aside><!-- End Sidebar-->
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <div style="margin-bottom: 10px; ">
+        <h1 style="float: left;">Banner</h1>
+      <p style="text-align: end;" ><a href="/Admin/addBanner">Add Banner+</a></p>
+      </div>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+          <li class="breadcrumb-item">Banner</li>
+          <li class="breadcrumb-item active">Banner list</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+  
+  <div class="card">
+    <div class="card-body">
+     
+  
+      <!-- Table with stripped rows -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scop="col">Banner Image</th>
+            <th scope="col">Main heading</th>
+            <th scope="col">Sub heading</th>
+            <th scope="col">Description</th>
+          
+          </tr>
+        </thead>
+     
+        
+        <tbody>
+          <% if(bannerData.length> 0 ){ %>
+        <% for(let i=0;i<bannerData.length;i++){%>
+          <tr>
+            <td><img style="height: 60px; width: 133px;" src="<%=bannerData[i].bannerImage %>" alt=""></td>
+            <td><%=bannerData[i].mainHeading %></td>
+            <td><%=bannerData[i].subHeading %></td>
+            <td><%=bannerData[i].description %></td>
+            <td><a href="/admin/deleteBanner?bannerId=<%= bannerData[i]._id %>" class=" btn btn-danger btn-sm">Delete</a></td> 
+            <td><a href="/admin/editBanner?bannerId=<%= bannerData[i]._id %>" class="btn btn-primary btn-sm">Edit</a></td> 
+            <% if(bannerData[i].status === 0){ %>
+            <td><a href="/admin/listBanner?bannerId=<%= bannerData[i]._id %>" class="btn btn-warning btn-sm">Unlist</a></td>
+            <% } else {%>
+              <td><a href="/admin/listBanner?bannerId=<%= bannerData[i]._id %>" class="btn btn-success btn-sm">List</a></td>
+            <% } %>   
+          </tr>
+
+          <% } %>
+       <% }else{ %>
+        <tr>
+            <td colspan="2">Banner Not found</td>
+        </tr>
+       <%  }  %>
+        
+      </tbody>
+        
+      </table>
+      <!-- End Table with stripped rows -->
+  
+    </div>
+  </div>
+  
+  </div>
+  </div>
+  </section>
+  
+  </main>
+  
+  <!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Stylish</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+
+<% include('../adminLayout/footer.ejs') %>
