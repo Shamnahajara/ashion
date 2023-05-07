@@ -45,7 +45,7 @@ const securePassword = async (password) => {
 
 const loadRegister = async (req, res) => {
   try {
-    res.render("registration");
+    res.render("Registration");
     message;
     msg;
   } catch (error) {
@@ -61,12 +61,12 @@ const insertUser = async (req, res) => {
     }
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-      return res.render("registration", {
+      return res.render("Registration", {
         message: "Email already registered",
       });
     }
     if (!req.body.name || req.body.name.trim().length === 0) {
-      return res.render("registration", {
+      return res.render("Registration", {
         messege: "Please Enter valid name",
       });
     }
@@ -195,7 +195,7 @@ const verifyReset = async (req, res) => {
 
 const loginLoad = async (req, res) => {
   try {
-    res.render("login");
+    res.render("Login");
   } catch (error) {
     console.log(error.message);
   }
@@ -213,13 +213,13 @@ const verifyLogin = async (req, res) => {
           req.session.user_id = userData._id;
           res.redirect("/home");
         } else {
-          res.render("login", { message: "your acount is blocked" });
+          res.render("Login", { message: "your acount is blocked" });
         }
       } else {
-        res.render("login", { message: "Incorrect Password"});
+        res.render("Login", { message: "Incorrect Password"});
       }
     } else {
-      res.render("login", { message: "Email is not registered yet" });
+      res.render("Login", { message: "Email is not registered yet" });
     }
   } catch (error) {
     console.log(error);

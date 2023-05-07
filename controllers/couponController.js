@@ -38,7 +38,7 @@ const updateCoupon = async(req,res)=>{
         console.log(req.body);
 
         if(!code || code.trim().length < 6){
-           return res.render('addCoupon',{message:"please enter a valid code"});
+           return res.render('addCoupon',{message:"please enter a valid 6 character code"});
         }
         if(startDate.getDate() <= currentDate.getDate()){
             return res.render('addCoupon',{message:"start date must be after the current date"});
