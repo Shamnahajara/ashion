@@ -76,7 +76,7 @@
 
 
 <!-- Product Section Begin -->
-<section class="product spad" >
+<section class="product spad" id="reloadDiv" >
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-4">
@@ -98,7 +98,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mix women">
                 <div class="product__item" >
                     <div class="product__item__pic set-bg" data-setbg="<%=productData[i].productimage[0]%>">
-                        <ul class="product__hover" id="reloadDiv">
+                        <ul class="product__hover" >
                             <% if(user && user.wishlist && user.wishlist.includes(productData[i]._id)) { %>
                                 <li><a href="/removewishlist?id=<%= productData[i]._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
 
@@ -167,7 +167,7 @@
 <!-- Services Section End -->
 
 
-<script>
+<!-- <script>
     function addToWishlist(proId){
        $.ajax({
            url:'/addtowishlist/'+proId,
@@ -184,8 +184,38 @@
             }    
        })
    }               
+  </script> -->
+  <script>
+    function addToWishlist(proId){
+       $.ajax({
+           url:'/addtowishlist/'+proId,
+           method:'get',
+           success: (response) => {
+  console.log(response);
+  if (response.success) {
+    const productId = proId;
+    // Select the button with the data-productid attribute
+    const wishlistButton = $(`a[data-productid="${productId}"]`);
+    // Modify the HTML of the button to reflect that the product has been added to the wishlist
+    wishlistButton.html('<span><img style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span>');
+    // Update the tooltip of the button to show that the product has been added to the wishlist
+    wishlistButton.attr('title', 'Remove from Wishlist');
+    // Add a click handler to the button to remove the product from the wishlist
+    wishlistButton.attr('onclick', `removeFromWishlist('${productId}')`);
+    // Show a success message to the user
+    swal({  
+      title: "Product",  
+      text: "Added To Whishlist!",  
+      icon: "success",  
+      button: "oh yes!",            
+    });
+  }
+  $('#reloadDiv').load('/home #reloadDiv');
+}
+  
+       })
+   }               
   </script>
-
 
 
 <script>

@@ -97,11 +97,17 @@
                             <i class="fa fa-star"></i>
                         </div>
                         <p><%= productData.description%></p>
-                        <div class="product__details__button">
+                        <div class="product__details__button" id="reloadDiv">
                           
                        
                             <ul>
-                                <li><a onclick="addToWishlist('<%= productData._id%>')" href="#"><span class="icon_heart_alt"></span></a></li>
+                                <% if(user && user.wishlist && user.wishlist.includes(productData._id)) { %>
+                                    <li><a  href="/removewishlist?id=<%= productData._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
+                                  <% } else { %>
+                                    <li><a onclick="addToWishlist('<%= productData._id %>')" href="#" data-productid="<%=productData._id %>">
+                                       <span><img style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span>
+                                     </a></li>
+                                  <% } %>
                                 
                                 <li><a onclick="addToCart('<%= productData._id%>')" href="#"><span class="icon_bag_alt"></span></a></li>
                             </ul>
@@ -248,22 +254,34 @@
   </script>
 
 
-
 <script>
     function addToWishlist(proId){
        $.ajax({
            url:'/addtowishlist/'+proId,
            method:'get',
-           success:(response)=>{
-            console.log(response)
-          
-                swal({  
-                title: "Product",  
-                text: "Added To Whishlist!",  
-                icon: "success",  
-                button: "oh yes!", 
-                });            
-            }    
+           success: (response) => {
+  console.log(response);
+  if (response.success) {
+    const productId = proId;
+    // Select the button with the data-productid attribute
+    const wishlistButton = $(`a[data-productid="${productId}"]`);
+    // Modify the HTML of the button to reflect that the product has been added to the wishlist
+    wishlistButton.html('<span><img style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span>');
+    // Update the tooltip of the button to show that the product has been added to the wishlist
+    wishlistButton.attr('title', 'Remove from Wishlist');
+    // Add a click handler to the button to remove the product from the wishlist
+    wishlistButton.attr('onclick', `removeFromWishlist('${productId}')`);
+    // Show a success message to the user
+    swal({  
+      title: "Product",  
+      text: "Added To Whishlist!",  
+      icon: "success",  
+      button: "oh yes!",            
+    });
+  }
+  $('#reloadDiv').load('/productdetail #reloadDiv');
+}
+  
        })
    }               
   </script>

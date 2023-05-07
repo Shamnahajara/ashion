@@ -292,6 +292,7 @@ const productdetail = async (req, res) => {
       hasPurchasedProduct,
       reviewData,
       reviewList,
+      user
     });
   } catch (error) {
     console.log(error);

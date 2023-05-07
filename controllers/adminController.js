@@ -275,6 +275,8 @@ const loadUsers = async (req, res) => {
   }
 };
 
+
+                            //...block and unblock user...\\
 const statusUpdate = async (req, res) => {
   try {
     const id = req.query.id;
@@ -297,6 +299,18 @@ const statusUpdate = async (req, res) => {
 
 /////////////////////////////////////////////category management\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+
+
+const loadCatogories = async (req, res) => {
+  try {
+    const catogoryData = await Catogory.find();
+    res.render("catogory", {catogoryData});
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+                            //...load add catogory...\\
 const loadAddCatogory = async (req, res) => {
   try {
     res.render("addCatogory");
@@ -305,6 +319,8 @@ const loadAddCatogory = async (req, res) => {
   }
 };
 
+
+                              //...update add catogory...\\
 const addCatogory = async (req, res) => {
   try {
     const existdata = await Catogory.findOne({ catogoryname: req.body.ctname });
@@ -330,16 +346,7 @@ const addCatogory = async (req, res) => {
 };
 
 
-
-const loadCatogories = async (req, res) => {
-  try {
-    const catogoryData = await Catogory.find();
-    res.render("catogory", {catogoryData});
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
+                                //...edit category...\\
 const editCatogory = async (req, res) => {
   try {
     const id = req.query.id;
@@ -351,6 +358,7 @@ const editCatogory = async (req, res) => {
   }
 };
 
+                              ///....update edit category...\\
 const updateCatogory = async (req, res) => {
   try {
     const existone = await Catogory.findOne({ catogoryname: req.body.name });
@@ -386,6 +394,8 @@ const loadBrand = async (req, res) => {
   }
 };
 
+
+                                //..load-add-brand..\\
 const loadAddBrand = async (req, res) => {
   try {
     res.render("addBrand");
@@ -394,6 +404,7 @@ const loadAddBrand = async (req, res) => {
   }
 };
 
+                              //..add-brand-update..\\
 const addBrand = async (req, res) => {
   try {
     const existBrand = await Brand.findOne({ brandname: req.body.name });
@@ -417,6 +428,8 @@ const addBrand = async (req, res) => {
   }
 };
 
+
+                                 //..brand-list..\\
 const loadBrands = async (req, res) => {
   try {
     const brandData = await Brand.find();
@@ -426,6 +439,8 @@ const loadBrands = async (req, res) => {
   }
 };
 
+
+                               //...edit-brand-load...\\
 const editBrand = async (req, res) => {
   try {
     const id = req.query.id;
@@ -441,6 +456,8 @@ const editBrand = async (req, res) => {
   }
 };
 
+
+                                    //..edit-brand-update..\\
 const updateBrand = async (req, res) => {
   try {
 
@@ -477,18 +494,20 @@ const loadProduct = async (req, res) => {
   }
 };
 
+
+                              //..add-product-load..\\
 const loadAddProduct = async (req, res) => {
   try {
     const catogoryData = await Catogory.find({});
-    console.log("catogoryData.."+catogoryData);
     const brandData = await Brand.find({});
-    console.log("brandData..."+brandData);
     res.render("addProduct", {catogoryData,brandData});
   } catch (error) {
     console.log(error.message);
   }
 };
 
+
+                              //...add-product-update...\\
 const addproduct = async (req, res) => {
   try {
     const arrimages = [];
@@ -519,6 +538,8 @@ const addproduct = async (req, res) => {
   }
 };
 
+
+                              //..productlist in dash..\\
 const loadProductlist = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -528,6 +549,7 @@ const loadProductlist = async (req, res) => {
   }
 };
 
+                            //...view product..\\
 const viewProduct = async (req, res) => {
   try {
     const id = req.query.id;
@@ -541,6 +563,7 @@ const viewProduct = async (req, res) => {
   }
 };
 
+                                //...edit-product load...\\
 const editproduct = async (req, res) => {
   try {
     const id = req.query.id;
@@ -556,6 +579,7 @@ const editproduct = async (req, res) => {
   }
 };
 
+                                    //...editproduct-update...\\
 const updateProduct = async (req, res) => {
   try {
     for (let i = 0; i < req.files.length; i++) {
@@ -591,6 +615,7 @@ const updateProduct = async (req, res) => {
 };
 
 
+                        //...product-unlist and list...\\
 
 const productUnlist = async (req, res) => {
   try {
@@ -684,6 +709,5 @@ module.exports = {
   updateProduct,
   productUnlist,
   deleteImage,
-
   logout,
 };
