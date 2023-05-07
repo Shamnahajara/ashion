@@ -162,9 +162,7 @@
                                      <h6><a href="#"><%=item.productname %></a></h6>
                                      <div class="product__price"><%=item.price %></div>
                                      <div><a href="/productdetail?id=<%=item._id %>" class="btn btn-danger" style="color:rgb(255, 255, 255)">Details</a></div>
-                                     
-                                     
-                                 </div>
+                                </div>
                              </div>
                           
                          
@@ -231,7 +229,10 @@
                 text: "Added To Whishlist!",  
                 icon: "success",  
                 button: "oh yes!",            
-                }); 
+                });
+                 // Update the wishlist button area
+                 $('#reloadDiv').load('/shop #reloadDiv')
+                 
             }    
        })
    }               
@@ -335,7 +336,6 @@
             })
         }
 
-
         function brand(id) {
             if ($(`#${id}`).is(':checked') == true) {
                 brands[b++] = $(`#${id}`).val();
@@ -344,7 +344,6 @@
                 brands.splice(index, 1);
                 b--;
             }
-            console.log(brands, '=============');
             submit(categorys, brands, search, filterprice);
         }
 
@@ -365,7 +364,6 @@
             } else if (check == 1) {
                 index = prices.indexOf($("#ONE").val())
                 prices.splice(index, 1)
-
             }
             if ($("#TWO").is(':checked') == true) {
                 two = $("#TWO").val()
@@ -412,7 +410,7 @@
                 let first = []
                 first[0] = prices[0]
                 filterprice[0] = first[0]
-                console.log(filterprice);
+
                 
             } else if (prices.length > 1 && prices[length - 1].split(',').length == 2) {
                 let first = [prices[0]]
@@ -421,14 +419,13 @@
                 second = second[0].split(',')
                 filterprice[0] = first[0]
                 filterprice[1] = second[1]
-                console.log(filterprice);
+
 
             } else if (prices.length > 1 && prices[length - 1].split(',').length == 1) {
                 let first = [prices[0]]
                 first = first[0].split(',')
                 filterprice[0] = first[0]
-                console.log(filterprice);
-                console.log('dhcf');
+
             }
             submit(categorys, brands, search, filterprice)
         }

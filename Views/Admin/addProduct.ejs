@@ -113,17 +113,7 @@
                       </div>
                     </div>
                   </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                      <select name="category" class="form-select" id="floatingSelect" aria-label="select catogery" required>
-                        <% category.forEach(i => { %>
-                           <option  value="<%=i._id%>"><%=i.catogoryname%></option>
-                        <% }); %>
-                        
-                        </select>
-                        <label for="floatingSelect">select category</label>
-                      </div>
-                    </div>
+             
 
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
@@ -135,7 +125,17 @@
                             <label for="floatingSelect">select brand</label>
                           </div>
                         </div>
-                 
+
+                        <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                            <select name="category" class="form-select" id="floatingSelect" aria-label="select catogery" required>
+                              <% for(let i=0;i<catogoryData.length;i++){ %>
+                                <option value="<%=catogoryData[i]._id%>"><%=catogoryData[i].catogoryname%></option>
+                              <% } %>
+                              </select>
+                              <label for="floatingSelect">select category</label>
+                            </div>
+                          </div>
                   
                   <div class="col-lg-6">
                    <div class="col-lg-5">

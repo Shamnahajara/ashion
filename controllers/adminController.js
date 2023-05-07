@@ -412,7 +412,6 @@ const addBrand = async (req, res) => {
     } else {
       res.render("addBrand", { message: "failed to add new brand" });
     }
-    console.log("okok");
   } catch (error) {
     console.log(error.message);
   }
@@ -481,8 +480,10 @@ const loadProduct = async (req, res) => {
 const loadAddProduct = async (req, res) => {
   try {
     const catogoryData = await Catogory.find({});
+    console.log("catogoryData.."+catogoryData);
     const brandData = await Brand.find({});
-    res.render("addProduct", {category: catogoryData, brandData });
+    console.log("brandData..."+brandData);
+    res.render("addProduct", {catogoryData,brandData});
   } catch (error) {
     console.log(error.message);
   }
@@ -493,13 +494,8 @@ const addproduct = async (req, res) => {
     const arrimages = [];
     if (req.files) {
       for await (const file of req.files) {
-        const mimeType = mime.lookup(file.orginalname);
-        if (mimeType && mimeType.includes("/public/img/product")) {
           const result = await cloudinary.uploader.upload(file.path);
-          arrimages.push(result.secure_url);
-        } else {
-          res.render("addProduct");
-        }
+          arrimages.push(result.secure_url);     
       }
     }
  
@@ -515,12 +511,9 @@ const addproduct = async (req, res) => {
     });
 
     const productData = await addproduct.save();
-
     if (productData) {
       res.redirect("/admin/product");
-    } else {
-      res.render("addProduct", { message: "Cant add new product" });
-    }
+    } 
   } catch (error) {
     console.log(error.message);
   }
@@ -622,25 +615,7 @@ const productUnlist = async (req, res) => {
 };
 
 
-//                                 //...delete image...\\
-// const deleteimage = async (req, res) => {
-//   try {
-//     const id = req.query.id;
-//     const imageupdate = await Product.updateOne(
-//       { productimage: id },
-//       { $pull: { productimage: { $in: [id] } } }
-//     );
-
-//     if (imageupdate) {
-//       res.redirect("/admin/editProduct");
-//     }
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
-
-
-                                // ...delete product image updation...\\
+                                // ...delete product image ...\\
 const deleteImage = async (req, res) => {
   try {
     const productId = req.query.productId;

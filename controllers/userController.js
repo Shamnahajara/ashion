@@ -314,13 +314,9 @@ const addtowishlist = async (req, res) => {
   const userId = req.session.user_id;
   try {
     const user = await User.findById({ _id: userId });
-    // if (user.wishlist.includes(productid)) {
-    //   res.json({ exit: true });
-    // } else {
       user.wishlist.push(productid);
       await user.save();
       res.json({ success: true });
-    // }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "server error" });
