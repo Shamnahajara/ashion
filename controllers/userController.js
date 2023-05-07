@@ -219,7 +219,7 @@ const verifyLogin = async (req, res) => {
         res.render("Login", { message: "Incorrect Password"});
       }
     } else {
-      res.render("Login", { message: "Email is not registered yet" });
+      res.render("Login");
     }
   } catch (error) {
     console.log(error);
