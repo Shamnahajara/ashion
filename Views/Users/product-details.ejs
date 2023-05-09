@@ -97,7 +97,7 @@
                             <i class="fa fa-star"></i>
                         </div>
                         <p><%= productData.description%></p>
-                        <% if(user) {%>
+                        <% if(user !== 'undefined') {%>
                         <div class="product__details__button" id="reloadDiv">
                             <ul>
                                 <% if(user && user.wishlist && user.wishlist.includes(productData._id)) { %>

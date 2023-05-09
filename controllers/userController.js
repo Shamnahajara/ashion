@@ -524,53 +524,6 @@ const productFilter = async (req, res) => {
 };
 
 
-// if (!search) {
-//   if (filterprice != 0) {
-//     // filter by price
-//     // ...
-//   } else {
-//     // sort by price if 'sort' parameter is provided
-//     let sortOption = {};
-//     if (sort) {
-//       if (sort === 'asc') {
-//         sortOption = { price: 1 };
-//       } else if (sort === 'desc') {
-//         sortOption = { price: -1 };
-//       }
-//     }
-//  product = await Product.find({ status: 0 })
-//       .populate("category")
-//       .populate("brand")
-//       .sort(sortOption);
-//   }
-// } else {
-//   if (filterprice != 0) {
-//     // filter by price and search query
-//     // ...
-//   } else {
-//     // search by query and sort by price if 'sort' parameter is provided
-//     let sortOption = {};
-//     if (sort) {
-//       if (sort === 'asc') {
-//         sortOption = { price: 1 };
-//       } else if (sort === 'desc') {
-//         sortOption = { price: -1 };
-//       }
-//     }
-//     product = await Product.find({
-//       status: 0,
-//       $or: [
-//         { productname: { $regex: ".*" + search + ".*", $options: "i" } },
-//       ],
-//     })
-//       .populate("category")
-//       .populate("brand")
-//       .sort(sortOption);
-//   }
-// }
-
-
-
 
 const priceLow = async(req,res,)=> {
   try {
