@@ -13,11 +13,12 @@ const loadCart = async (req, res) => {
     try {
       let totalPrice = 0;
       session = req.session.user_id;
+      const user = await User.find({_id:session});
       const cart = await Cart.findOne({ userId: session }).populate(
         "item.product"
       );
       if (!cart || !session) {
-        res.render("shop-cart", { items: [], totalPrice, session });
+        res.render("shop-cart", { items: [], totalPrice, session,user });
       }
   
       if (cart && cart.item != null) {
@@ -30,7 +31,7 @@ const loadCart = async (req, res) => {
         { $set: { totalPrice: totalPrice } }
       );
       const items = cart.item;
-      res.render("shop-cart", { items, session, totalPrice });
+      res.render("shop-cart", { items, session, totalPrice ,user});
     } catch (err) {
       console.error(err);
     }

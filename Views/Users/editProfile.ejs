@@ -10,27 +10,32 @@
                 </div>
             </div>
             <div class="col-xl-6 col-lg-7">
-                <nav class="header__menu">
-                    <ul>
-                        <li ><a href="/home">Home</a></li>
-                        <li ><a href="/shop">Shop</a></li> 
-                                               
-                        <li><a href="#">Click here</a>
-                            <ul class="dropdown">
-                                <% if(session){%>
-                                    <li><a href="/logout">Logout</a></li>
-                                    <% }else {%>     
-                                   <li> <a href="/login">Login</a></li>
-                                   <li> <a href="/register">Register</a></li>
-                                <% } %>
-                            
-                               
-                            </ul>
-                        </li>
-                        <li class="active"><a href="/userProfile"><span><img src="/public/img/user-male-circle.png" style="max-width: 60%;" alt="#"></span></a></li> 
-                    </ul>
-                </nav>
-            </div>
+              <nav class="header__menu">
+                  <ul>
+                      <li class="active"><a href="/home">Home</a></li>
+                      <li ><a href="/shop">Shop</a></li> 
+                      <% if(session){%>                      
+                      <li><a href="#"><%= userData.name %></a>                          
+                          <ul class="dropdown">
+                                  <li><a href="/userProfile">My Profile</a></li> 
+                                  <li><a href="/logout">Logout</a></li>
+                              </ul>
+                          </li>
+                      <% }else {%> 
+                      <li><a href="#">Click here</a>                          
+                              <ul class="dropdown">      
+                                 <li> <a href="/login">Login</a></li>
+                                 <li> <a href="/register">Register</a></li>
+                              </ul>
+                          </li>
+                              <% } %>
+                          
+                             
+                      
+                      
+                  </ul>
+              </nav>
+          </div>
             <div class="col-lg-3">
                 <div class="header__right">
                   

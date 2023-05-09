@@ -302,8 +302,9 @@ const productdetail = async (req, res) => {
 const wishlist = async (req, res) => {
   try {
     const session = req.session.user_id;
+    const user = await User.find({_id:session});
     const wishlist = await User.findOne({ _id: session }).populate("wishlist");
-    res.render("wishlist", { session, wishlist, message, msg });
+    res.render("wishlist", { session, wishlist, message, msg,user });
     message = null;
   } catch (error) {
     console.log(error);
@@ -563,7 +564,8 @@ const addressPage = async (req, res) => {
   try {
     const session = req.session.user_id;
     const id = req.session.user_id;
-    res.render("addAddress", { id, msg, message, session });
+    const user  = await User.find({session});
+    res.render("addAddress", { id, msg, message, session,user });
     msg = null;
     message = null;
   } catch (error) {
@@ -606,7 +608,7 @@ const loadEditAddress = async (req, res) => {
     const index = req.query.index;
     const user = await User.findById({ _id: session });
     const address = user.address[index];
-    res.render("editAddress", { msg, message, address, index });
+    res.render("editAddress", { msg, message, address, index ,user});
   } catch (error) {
     console.log(error);
   }
@@ -815,6 +817,7 @@ const loadCheckout = async (req, res) => {
         items,
         wallet,
         coupons,
+        userDetails
       });
       msg = null;
     } catch (error) {
@@ -861,7 +864,7 @@ const loadPaymentPage = async (req, res) => {
       let wallet = 0;
       req.session.wallet = null;
       req.session.ok = Total;
-      res.render("paymentPage", { Total, session, msg, wallet });
+      res.render("paymentPage", { Total, session, msg, wallet,user});
     }
   } catch (error) {
     console.log(error);
@@ -996,7 +999,7 @@ const orderDetails = async (req, res) => {
       .sort({ _id: -1 })
       .limit(1)
       .populate("item.product");
-    res.render("confirmation", { orders, session, msg });
+    res.render("confirmation", { orders, session, msg,userData });
   } catch (error) {
     console.log(error);
   }
@@ -1007,6 +1010,7 @@ const orderDetails = async (req, res) => {
 const orderData = async (req, res) => {
   try {
     const session = req.session.user_id;
+    const user = await User.find({_id:session})
     let page = req.query.page || 1;
     const orders = await Orders.find({ userId: session })
       .populate("item.product")
@@ -1023,6 +1027,7 @@ const orderData = async (req, res) => {
     res.render("orderPage", {
       orders,
       session,
+      user,
       totalPages: Math.ceil(count / 4),
     });
   } catch (error) {
