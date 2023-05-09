@@ -101,14 +101,14 @@
                     <div style="background-image: url(<%=productData[i].productimage[0]%>);"  class="product__item__pic set-bg" data-setbg="<%=productData[i].productimage[0]%>">
                         <ul class="product__hover">
                             <% if(user){ %>
-                            <% if(user && user.wishlist && user.wishlist.includes(item._id)) { %>
-                                <li><a  href="/removewishlist?id=<%= item._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
+                            <% if(user && user.wishlist && user.wishlist.includes(productData[i]._id)) { %>
+                                <li><a  href="/removewishlist?id=<%= productData[i]._id%>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
                               <% } else { %>
-                                <li><a onclick="addToWishlist('<%= item._id %>')" href="#" data-productid="<%= item._id %>">
+                                <li><a onclick="addToWishlist('<%= productData[i]._id%>')" href="#" data-productid="<%= productData[i]._id %>">
                                    <span><img style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span>
                                  </a></li>
                               <% } %>
-                            <li><a onclick="addToCart('<%= item._id%>')"><span class="icon_bag_alt"></span></a></li>
+                            <li><a onclick="addToCart('<%= productData[i]._id%>')"><span class="icon_bag_alt"></span></a></li>
                         <% }else{ %>
                            <li><a  href="/login">
                                <span><img style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span>
