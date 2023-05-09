@@ -311,16 +311,21 @@ const wishlist = async (req, res) => {
 };
 
 const addtowishlist = async (req, res) => {
-  const productid = req.params.id;
-  const userId = req.session.user_id;
-  try {
-    const user = await User.findById({ _id: userId });
-      user.wishlist.push(productid);
-      await user.save();
-      res.json({ success: true });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "server error" });
+  const session = req.session.user_id
+  if(session){
+    const productid = req.params.id;
+    const userId = req.session.user_id;
+    try {
+      const user = await User.findById({ _id: userId });
+        user.wishlist.push(productid);
+        await user.save();
+        res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "server error" });
+    }
+  }else{
+    res.render('Login',{mesaage:'please login to website using your account'});
   }
 };
 
@@ -517,6 +522,87 @@ const productFilter = async (req, res) => {
     console.log(error);
   }
 };
+
+
+// if (!search) {
+//   if (filterprice != 0) {
+//     // filter by price
+//     // ...
+//   } else {
+//     // sort by price if 'sort' parameter is provided
+//     let sortOption = {};
+//     if (sort) {
+//       if (sort === 'asc') {
+//         sortOption = { price: 1 };
+//       } else if (sort === 'desc') {
+//         sortOption = { price: -1 };
+//       }
+//     }
+//  product = await Product.find({ status: 0 })
+//       .populate("category")
+//       .populate("brand")
+//       .sort(sortOption);
+//   }
+// } else {
+//   if (filterprice != 0) {
+//     // filter by price and search query
+//     // ...
+//   } else {
+//     // search by query and sort by price if 'sort' parameter is provided
+//     let sortOption = {};
+//     if (sort) {
+//       if (sort === 'asc') {
+//         sortOption = { price: 1 };
+//       } else if (sort === 'desc') {
+//         sortOption = { price: -1 };
+//       }
+//     }
+//     product = await Product.find({
+//       status: 0,
+//       $or: [
+//         { productname: { $regex: ".*" + search + ".*", $options: "i" } },
+//       ],
+//     })
+//       .populate("category")
+//       .populate("brand")
+//       .sort(sortOption);
+//   }
+// }
+
+
+
+
+const priceLow = async(req,res,)=> {
+  try {
+
+    const session = req.session.user_id;
+    let page = req.query.page || 1;
+    
+    const num = parseInt(req.query.value)
+
+    const ProductData = await Product.find({status:0}).sort({price:num}).limit(6).skip((page - 1) * 6).exec();
+      const count = await Product.find({ status: { $ne: 1 } })
+      .sort({ _id: -1 })
+      .countDocuments();
+    const  categoryData  = await Catogory.find()
+    console.log('fghj'+categoryData)
+    const brandData = await Brand.find()
+      const user = req.session.user_id
+  
+      res.render('shop', {
+        ProductData,
+        user,
+        categoryData,
+        brandData, 
+        session,
+        totalPages: Math.ceil(count / 6),
+    })
+
+  } catch (error) {
+ console.log(error.msg)
+  }
+}
+
 
 // /////////////////////////////////////////address management\\\\\\\\\\\\\\\\\\\\
 
@@ -1182,6 +1268,7 @@ const deleteReview = async (req, res) => {
   }
 };
 
+
 module.exports = {
   loadRegister,
   insertUser,
@@ -1222,4 +1309,5 @@ module.exports = {
   wishlist,
   addtowishlist,
   removewishlist,
+  priceLow
 };

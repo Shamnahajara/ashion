@@ -16,7 +16,7 @@ user_route.post( "/resendOtp" , auth.isLogout, userController.resendOTP);
 
 user_route.get( "/", userController.loadHome);
 
-user_route.get( "/home", auth.isLogin, block.blocked, userController.loadHome);
+user_route.get( "/home", userController.loadHome);
 
 user_route.get( "/login", auth.isLogout, userController.loginLoad);
 
@@ -57,6 +57,8 @@ user_route.post(  "/decrementCart",  auth.isLogin,  block.blocked,  cartControll
 user_route.post(  "/removeCart", auth.isLogin,  block.blocked,  cartController.removeCart);
 
 user_route.post(  "/shopFilter",    userController.productFilter);
+
+user_route.get( "/priceLow", userController.priceLow);
 
 user_route.get(  "/userProfile",  auth.isLogin,  block.blocked,  userController.profileLoad);
 

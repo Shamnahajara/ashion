@@ -50,12 +50,22 @@
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
+            <div class="row ">
+                <div class="col-lg-12 d-flex">
+                    
+                    <div style="justify-content: space-between;">
+                    <div class="breadcrumb__links ">
                         <a href="/home"><i class="fa fa-home"></i> Home</a>
                         <span>Shop</span>
                     </div>
+
+
+
+             
+        </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -70,9 +80,6 @@
                     <div class="shop__sidebar">
                          <input type="search" onkeyup="filtersearch()" id="search" style="margin-bottom: 40px; border-radius:20px;width: 200px;height: 43px;" placeholder="Search Product">
                         
-
-
-
                         <div class="sidebar__sizes">
                             <div class="section-title">
                                 <h4>Shop by Category</h4>
@@ -137,6 +144,25 @@
                                
                             </div>
                         </div>
+                        <div class="sidebar__sizes">
+                            <div class="section-title">
+                                <h4>Shop by Price</h4>
+                            </div>
+                            <div class="size__list">
+                             <ul style="list-style-type: none;">
+                                <li>                                    
+                                    
+                                    <a style="text-decoration: none;" href="/priceLow?value=1">Low to High</a> 
+                                </li>
+                                <li>                                    
+                                    <a style="text-decoration: none;" href="/priceLow?value=-1">High to Low</a>
+                                 
+                                </li>
+                                
+                          </ul>
+                               
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div  class="col-lg-9 col-md-9" id="reloadDiv">
@@ -145,11 +171,11 @@
                             <% ProductData.forEach(function(item) {%>
                                 <div class="col-lg-4 col-md-6">
                                
-                                      <div id="wishlistDiv" class="product__item">
+                            <div id="wishlistDiv" class="product__item">
                               <div class="product__item__pic set-bg" data-setbg="">
                                   <a href="/productdetail?id=<%=item._id %>"> <img src="<%=item.productimage[0] %>" alt=""></a>
                                      <ul class="product__hover">
-                                         
+                                         <% if(user){ %>
                                          <% if(user && user.wishlist && user.wishlist.includes(item._id)) { %>
                                              <li><a  href="/removewishlist?id=<%= item._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
                                            <% } else { %>
@@ -158,7 +184,14 @@
                                               </a></li>
                                            <% } %>
                                          <li><a onclick="addToCart('<%= item._id%>')"><span class="icon_bag_alt"></span></a></li>
-                                     </ul>
+                                     <% }else{ %>
+                                        <li><a  href="/login">
+                                            <span><img style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span>
+                                          </a></li>
+                                         <li><a href="/login"><span class="icon_bag_alt"></span></a></li>
+                                         <% } %>
+                                        </ul>
+                                     
                                  </div>
                                  <div class="product__item__text">
                                      <h6><a href="#"><%=item.productname %></a></h6>
@@ -244,7 +277,8 @@
       button: "oh yes!",            
     });
   }
-  $('#reloadDiv').load('/shop #reloadDiv');
+  
+  $('#reloadDiv').load('/shop #Filter');
 }
   
        })

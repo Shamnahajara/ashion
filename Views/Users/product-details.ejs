@@ -97,9 +97,8 @@
                             <i class="fa fa-star"></i>
                         </div>
                         <p><%= productData.description%></p>
+                        <% if(user) {%>
                         <div class="product__details__button" id="reloadDiv">
-                          
-                       
                             <ul>
                                 <% if(user && user.wishlist && user.wishlist.includes(productData._id)) { %>
                                     <li><a  href="/removewishlist?id=<%= productData._id %>"><span><img  style="max-width: 50%;" src="/public/img/filled-like.png" alt=""></span></a></li>
@@ -112,6 +111,17 @@
                                 <li><a onclick="addToCart('<%= productData._id%>')" href="#"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
+                        <% }else{ %>
+                            <div class="product__details__button" id="reloadDiv">
+                                <ul>
+                                    <li><a href="/login" data-productid="<%=productData._id %>">
+                                        <span><img style="max-width: 50%;" src="/public/img/unfilled-like.png" alt=""></span>
+                                      </a></li>
+                                    
+                                    <li><a  href="/login"><span class="icon_bag_alt"></span></a></li>
+                                </ul>
+                            </div>
+                            <% } %>
                         <div class="product__details__widget">
                             <ul>
                                 <li>
@@ -281,7 +291,6 @@
   }
   $('#reloadDiv').load('/productdetail #reloadDiv');
 }
-  
        })
    }               
   </script>
