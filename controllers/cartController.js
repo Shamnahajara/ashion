@@ -8,7 +8,7 @@ let msg;
 let message;
 
 
-                                          //...loadCart...\\
+                                          //......loadCart.......\\
 const loadCart = async (req, res) => {
     try {
       let totalPrice = 0;
@@ -38,7 +38,7 @@ const loadCart = async (req, res) => {
   };
     
 
-                                          //..add to Cart..\\           
+                                          //.....add to Cart......\\           
   const addToCart = async (req, res) => {
     try {
         const productId = req.params.id;

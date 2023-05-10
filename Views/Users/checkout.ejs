@@ -18,7 +18,7 @@
                       <ul>
                           <li class="active"><a href="/home">Home</a></li>
                           <li ><a href="/shop">Shop</a></li> 
-                          <% if(session){%>                      
+                          <% if(session){ %>                      
                           <li><a href="#"><%= userDetails.name %></a>                          
                               <ul class="dropdown">
                                       <li><a href="/userProfile">My Profile</a></li> 
@@ -33,10 +33,6 @@
                                   </ul>
                               </li>
                                   <% } %>
-                              
-                                 
-                          
-                          
                       </ul>
                   </nav>
               </div>
@@ -170,8 +166,10 @@
                 
                                     </div>
                                     <% } %>
-                
-                
+                <% if(message !== 'undefined'){%>
+                  <p><%= message%></p>
+
+              <%  } %>                
                                 </div>
                             </div>
                         </div>

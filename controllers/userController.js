@@ -380,6 +380,7 @@ const productFilter = async (req, res) => {
     let Categorys = [];
     let Data = [];
     let Datas = [];
+    let page = req.body.page || 1;
     let brand = [];
     const { categorys, search, brands, filterprice, sort } = req.body;
     brand = brands;
@@ -518,7 +519,13 @@ const productFilter = async (req, res) => {
         Data[0] = product;
       }
     }
-    res.json({ Data });
+    const totalPages = Math.ceil(Data[0].length / 3);
+    console.log(page+"lllllllllllllllllllllllllllll")
+    const itemsPerPage = 3;
+    const startingIndex = (page - 1) * itemsPerPage;
+    const itemsToShow = [Data.flatMap(innerArray => innerArray.slice(startingIndex, startingIndex + itemsPerPage))];
+    res.json({ itemsToShow ,totalPages});
+    console.log("items:"+itemsToShow)
   } catch (error) {
     console.log(error);
   }
@@ -560,6 +567,10 @@ const priceLow = async(req,res,)=> {
 
 // /////////////////////////////////////////address management\\\\\\\\\\\\\\\\\\\\
 
+
+
+
+                                //........add-address-load........\\
 const addressPage = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -573,6 +584,8 @@ const addressPage = async (req, res) => {
   }
 };
 
+
+                                //.......add-new address......\\\
 const addAddress = async (req, res) => {
   try {
     const id = req.session.user_id;
@@ -602,6 +615,9 @@ const addAddress = async (req, res) => {
   }
 };
 
+
+
+                                    //.....load edit-address......\\\
 const loadEditAddress = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -614,6 +630,9 @@ const loadEditAddress = async (req, res) => {
   }
 };
 
+
+
+                          ///.....edit-address-update....\\\
 const editAddress = async (req, res) => {
   try {
     const id = req.session.user_id;
@@ -665,6 +684,9 @@ const editAddress = async (req, res) => {
   }
 };
 
+
+
+                                      //.......delete-address......\\
 const deleteAddress = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -682,6 +704,8 @@ const deleteAddress = async (req, res) => {
 
 /////////////////////////////Profile management\\\\\\\\\\\\\\\\\\\\\\\
 
+
+                                    ///.....load-user-profile....\\\
 const profileLoad = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -693,6 +717,9 @@ const profileLoad = async (req, res) => {
     console.log(error);
   }
 };
+
+
+                                    ///.......edit-profile....\\\
 const editProfile = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -704,6 +731,8 @@ const editProfile = async (req, res) => {
   }
 };
 
+
+                              //........edit-profile update....\\\\
 const updateProfile = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -812,6 +841,7 @@ const loadCheckout = async (req, res) => {
         session,
         userAddress,
         msg,
+        message,
         items,
         totalPrice,
         items,
@@ -829,13 +859,16 @@ const loadCheckout = async (req, res) => {
   }
 };
 
-// //////////////////////////////////payment page\\\\\\\\\\\\\\\\\\\\\
+// /////////////////////////////////////////  payment and confirmation \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+
+                              //......load payment-page....\\\
 const loadPaymentPage = async (req, res) => {
   try {
     index = req.body.address;
     if (!index) {
       res.redirect("/checkout");
+
     }
     let session = req.session.user_id;
     const Total = req.body.totalPrice;
@@ -871,6 +904,9 @@ const loadPaymentPage = async (req, res) => {
   }
 };
 
+
+
+                                  ///.......order-confiremation....\\\
 const orderConfirm = async (req, res) => {
   try {
     const payment = req.body;
@@ -1006,7 +1042,7 @@ const orderDetails = async (req, res) => {
 };
 
 
-                              ///...order-list and order-action...\\\
+                              ///.......order-list and order-action........\\\
 const orderData = async (req, res) => {
   try {
     const session = req.session.user_id;
@@ -1036,7 +1072,7 @@ const orderData = async (req, res) => {
 };
 
 
-                                ///...user-order-detail...\\\
+                                ///.......user-order-detail.......\\\
 const fullOrder = async (req, res) => {
   try {
     const id = req.query.orderId;
@@ -1055,7 +1091,7 @@ const fullOrder = async (req, res) => {
 };
 
 
-                                ///...cancel-order...\\\
+                                ///........cancel-order......\\\
 const cancelOrder = async (req, res) => {
   try {
     const id = req.query.orderId;
